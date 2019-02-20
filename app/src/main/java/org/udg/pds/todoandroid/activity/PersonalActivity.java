@@ -1,6 +1,7 @@
 package org.udg.pds.todoandroid.activity;
 
 import android.app.Person;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -45,7 +46,10 @@ public class PersonalActivity extends AppCompatActivity {
             public void onClick(View view) {
                 if(etText.getText() != null){
                     String shit = etText.getText().toString();
-                    Toast.makeText(PersonalActivity.this, shit, Toast.LENGTH_LONG).show();
+                    Intent i = new Intent();
+                    i.putExtra(NavDrawerActivity.RESULT_DATA, shit);
+                    setResult(RESULT_OK, i);
+                    finish();
                 }
             }
         });
