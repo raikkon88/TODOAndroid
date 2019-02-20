@@ -24,5 +24,8 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="title_activity_splash_screen">TODO</string>
     <string name="splash_content">TODO</string>
+    <string name="title_activity_personal">PersonalActivity</string>
+
+    <string name="personal_ctivity_text_btn">Send this shit</string>
 
 </resources>
