@@ -1,7 +1,10 @@
 package org.udg.pds.todoandroid.activity;
 
+import android.app.Activity;
+import android.app.Application;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.PersistableBundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.util.Log;
@@ -14,6 +17,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import org.udg.pds.todoandroid.R;
@@ -21,12 +25,19 @@ import org.udg.pds.todoandroid.R;
 public class NavDrawerActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
+    public static final int ACTIVITY_OK = 1;
     public static final String RESULT_DATA = "result_data";
+
+    private TextView textCentrat;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_nd);
+
+        textCentrat = (TextView) findViewById(R.id.tv_contingut_centre);
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -39,7 +50,7 @@ public class NavDrawerActivity extends AppCompatActivity
                             @Override
                             public void onClick(View view) {
                                 Intent intent = new Intent(NavDrawerActivity.this , PersonalActivity.class);
-                                startActivityForResult(intent, RESULT_OK);
+                                startActivityForResult(intent, ACTIVITY_OK);
                             }
                         }).show();
             }
@@ -54,15 +65,35 @@ public class NavDrawerActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putString(RESULT_DATA, textCentrat.getText().toString());
+    }
+
+
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        if(textCentrat != null){
+            textCentrat.setText(savedInstanceState.getString(RESULT_DATA));
+        }
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        Log.d("TEST", "provandooooo");
-        if(resultCode == RESULT_OK){
-            String resultText = data.getStringExtra(RESULT_DATA);
-            Toast.makeText(NavDrawerActivity.this, resultText, Toast.LENGTH_LONG);
+        if(requestCode == Activity.RESULT_FIRST_USER){
+            if(resultCode == Activity.RESULT_OK){
+                String resultText = data.getStringExtra(RESULT_DATA);
+                if(textCentrat != null && resultText != null)
+                    textCentrat.setText(resultText);
+            }
         }
     }
 

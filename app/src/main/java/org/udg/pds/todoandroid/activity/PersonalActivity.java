@@ -1,5 +1,6 @@
 package org.udg.pds.todoandroid.activity;
 
+import android.app.Activity;
 import android.app.Person;
 import android.content.Intent;
 import android.os.Bundle;
@@ -48,7 +49,7 @@ public class PersonalActivity extends AppCompatActivity {
                     String shit = etText.getText().toString();
                     Intent i = new Intent();
                     i.putExtra(NavDrawerActivity.RESULT_DATA, shit);
-                    setResult(RESULT_OK, i);
+                    setResult(Activity.RESULT_OK, i);
                     finish();
                 }
             }
